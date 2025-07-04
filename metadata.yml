@@ -1,0 +1,68 @@
+name: text-classifier
+version: 0.1.0
+description: Fine-tuned T5 model for text classification using LoRA
+author: KitOps Demo
+license: MIT
+repository: https://github.com/kitops/text-classifier-demo
+tags:
+  - nlp
+  - classification
+  - text-generation
+  - lora
+  - transformers
+  - fastapi
+
+model:
+  base_model: google/flan-t5-small
+  fine_tuning_method: LoRA
+  task: text2text-generation
+  metrics:
+    - accuracy
+    - perplexity
+
+training:
+  dataset_size: 20
+  epochs: 1
+  batch_size: 4
+  fp16: false
+  bf16: false
+
+inference:
+  framework: FastAPI
+  port: 8000
+  endpoints:
+    - /generate
+    - /health
+  input_format: JSON
+  output_format: JSON
+
+deployment:
+  kubernetes:
+    replicas: 1
+    init_container: kitops-init
+    model_path: /model
+
+dependencies:
+  python: ">=3.8"
+  packages:
+    - transformers==4.41.0
+    - torch==2.3.0
+    - peft==0.10.0
+    - datasets==2.19.1
+    - fastapi==0.111.0
+    - uvicorn==0.29.0
+
+usage:
+  quick_start: |
+    1. Install dependencies: pip install -r requirements.txt
+    2. Train model: python src/train.py
+    3. Start API: python src/app.py
+    4. Test: curl -X POST "http://localhost:8000/generate" \
+               -H "Content-Type: application/json" \
+               -d '{"text": "Translate to French: I love ML"}'
+  
+  kubernetes: |
+    1. kit init .
+    2. kit pack . -t jozu.ml/<user>/text-classifier:0.1.0
+    3. kit push jozu.ml/<user>/text-classifier:0.1.0
+    4. kubectl apply -f k8s/ 

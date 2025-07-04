@@ -1,0 +1,19 @@
+manifestVersion: 1.0          # required
+package:
+  name: text-classifier
+  version: 0.2.0
+  description: Tiny FLAN-T5 demo with vLLM compatibility
+  authors: [Arnab]
+
+code:
+  - path: src/                # FastAPI / inference server
+    description: Inference code
+    license: Apache-2.0
+
+model:
+  name: flan-t5-small-merged
+  path: vllm-model/           # folder with merged model weights
+  framework: transformers
+  version: 0.2.0
+  description: Merged FLAN-T5 model compatible with vLLM
+  license: Apache-2.0

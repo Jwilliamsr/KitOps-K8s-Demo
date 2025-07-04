@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text-classifier
+spec:
+  replicas: 1                                    # easy to scale later
+  selector:
+    matchLabels:
+      app: text-classifier
+  template:
+    metadata:
+      labels:
+        app: text-classifier
+    spec:
+      # ---------- KitOps Init + vLLM Container ----------
+      volumes:
+        - name: model-store
+          emptyDir: {}
+      initContainers:
+        - name: kitops-init
+          image: ghcr.io/kitops-ml/kitops-init:latest
+          env:
+            - name: MODELKIT_REF
+              value: "jozu.ml/arnabchat2001/text-classifier:0.2.0"
+            - name: UNPACK_PATH
+              value: "/model"
+          volumeMounts:
+            - name: model-store
+              mountPath: /model
+
+      containers:
+        - name: api
+          image: jozu.ml/arnabchat2001/text-classifier/vllm-cpu:0.1.0
+          env:
+            - name: MODEL_PATH
+              value: "/model/vllm-model"
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: model-store
+              mountPath: /model
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          resources:                            # increased for vLLM
+            requests: { cpu: 500m, memory: 2Gi }
+            limits:   { cpu: 2000m, memory: 4Gi }

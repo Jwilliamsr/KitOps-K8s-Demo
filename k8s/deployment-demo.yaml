@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text-classifier
+  labels:
+    app: text-classifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: text-classifier
+  template:
+    metadata:
+      labels:
+        app: text-classifier
+    spec:
+      # ---------- KitOps Init Container ----------
+      volumes:
+        - name: model-store
+          emptyDir: {}
+      initContainers:
+        - name: kitops-init
+          image: ghcr.io/kitops-ml/kitops-init:latest
+          env:
+            - name: MODELKIT_REF
+              value: "jozu.ml/arnabchat2001/text-classifier:0.1.0"
+            - name: UNPACK_PATH
+              value: "/model"
+          volumeMounts:
+            - name: model-store
+              mountPath: /model
+
+      # ---------- FastAPI Container (Pre-built with dependencies) ----------
+      containers:
+        - name: api
+          image: huggingface/transformers-pytorch-cpu:latest
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - |
+              pip install peft fastapi uvicorn
+              cd /app
+              python -m uvicorn src.app:app --host 0.0.0.0 --port 8000
+          env:
+            - name: MODEL_PATH
+              value: "/model/fine-tuned"
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: model-store
+              mountPath: /model
+            - name: app-code
+              mountPath: /app
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests: { cpu: 200m, memory: 1Gi }
+            limits: { cpu: 1000m, memory: 2Gi }
+      
+      volumes:
+        - name: model-store
+          emptyDir: {}
+        - name: app-code
+          configMap:
+            name: app-code 
