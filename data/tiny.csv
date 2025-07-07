@@ -1,21 +1,22 @@
-prompt,answer
-"Translate to French: Hello, how are you?","Bonjour, comment allez-vous?"
-"Translate to Spanish: I love machine learning","Me encanta el aprendizaje automático"
-"Summarize this text: Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions without being explicitly programmed.","ML is a type of AI that lets computers learn automatically."
-"Explain quantum computing in simple terms:","Quantum computing uses quantum mechanics to process information in ways classical computers cannot."
-"What is the capital of France?","The capital of France is Paris."
-"Convert 25 degrees Celsius to Fahrenheit:","25 degrees Celsius is 77 degrees Fahrenheit."
-"Write a haiku about programming:","Code flows like water,\nLogic guides the way forward,\nBugs find their escape."
-"What are the benefits of exercise?","Exercise improves health, mood, energy, and longevity."
-"Explain photosynthesis:","Photosynthesis is how plants convert sunlight into energy and oxygen."
-"What is the meaning of life?","The meaning of life is a philosophical question with many perspectives."
-"How do you make coffee?","Grind beans, add hot water, let steep, then filter and serve."
-"What is machine learning?","Machine learning is AI that learns patterns from data to make predictions."
-"What is the speed of light?","The speed of light is approximately 299,792,458 meters per second."
-"How do plants grow?","Plants grow through photosynthesis, absorbing sunlight, water, and nutrients."
-"What is democracy?","Democracy is government by the people, for the people, through voting."
-"How do you cook pasta?","Boil water, add pasta, cook until al dente, then drain and serve."
-"What is climate change?","Climate change is long-term shifts in global weather patterns and temperatures."
-"How do you learn a new language?","Practice regularly, immerse yourself, use apps, and speak with native speakers."
-"What is the internet?","The internet is a global network connecting computers and information worldwide."
-"How do you write a good essay?","Plan your structure, research thoroughly, write clearly, and revise carefully." 
+text,label
+"Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question(std txt rate)T&C's apply 08452810075over18's",spam
+"Hey how are you doing today?",ham
+"WINNER!! As a valued network customer you have been selected to receivea £900 prize reward! To claim call 09061701461. Claim code KL341. Valid 12 hours only.",spam
+"Can you pick up some milk on your way home?",ham
+"Urgent! You have won a 1 week FREE membership in our £100,000 Prize Jackpot! Txt the word: CLAIM to No: 81010 T&C www.dbuk.net LCCLTD POBOX 4403LDNW1A7RW18",spam
+"Thanks for the meeting today. Let's follow up next week.",ham
+"PRIVATE! Your 2003 Account Statement for 07808 shows 800 un-redeemed S.I.M. points. Call 08715203028 Identifier Code: 41685 Expires 31/10/04",spam
+"Happy birthday! Hope you have a great day!",ham
+"SIX chances to win CASH! From 100 to 20,000 pounds txt> CSH11 and send to 87575. Cost 150p/day, 6days, 16+ TsandCs apply Reply HL 4 info",spam
+"Running late for the meeting, will be there in 10 minutes",ham
+"URGENT! Your Mobile No 07808726822 was awarded a £2,000 Bonus Caller Prize on 02/09/03! This is our 2nd attempt to contact YOU! Call 0871-872-9758 BOX95QU",spam
+"Don't forget we have dinner plans tonight at 7pm",ham
+"Congratulations ur awarded 500 of CD vouchers or 125gift guaranteed & Free entry 2 100 wkly draw txt MUSIC to 87066 TnCs www.Ldew.com1win150ppmx3age16",spam
+"Could you send me the report by tomorrow morning?",ham
+"WINNER!! As a valued network customer you have been selected to receivea £900 prize reward! To claim call 09061701461. Claim code KL341. Valid 12 hours only.",spam
+"The weather looks great for the weekend trip",ham
+"FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+",spam
+"Meeting has been moved to conference room B",ham
+"You have received a new message. Please call 08712460324 now. From +447797706009",spam
+"Looking forward to seeing you at the party",ham
+"CALL FREE! 0800 542 0825 now & claim ur £250 reward or 4* holiday (flights inc) speak to a live operator NOW or txt back STOP",spam 

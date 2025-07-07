@@ -17,3 +17,4 @@ model:
   version: 0.2.0
   description: Merged FLAN-T5 model compatible with vLLM
   license: Apache-2.0
+ 

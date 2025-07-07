@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: text-classifier
+  labels:
+    app: text-classifier
 spec:
-  replicas: 1                                    # easy to scale later
+  replicas: 1
   selector:
     matchLabels:
       app: text-classifier
@@ -12,7 +14,7 @@ spec:
       labels:
         app: text-classifier
     spec:
-      # ---------- KitOps Init + vLLM Container ----------
+      # ---------- KitOps Init Container ----------
       volumes:
         - name: model-store
           emptyDir: {}
@@ -21,32 +23,51 @@ spec:
           image: ghcr.io/kitops-ml/kitops-init:latest
           env:
             - name: MODELKIT_REF
-              value: "jozu.ml/arnabchat2001/text-classifier:0.2.0"
+              value: "jozu.ml/arnabchat2001/text-classifier:0.1.0"
             - name: UNPACK_PATH
               value: "/model"
           volumeMounts:
             - name: model-store
               mountPath: /model
 
+      # ---------- Demo API Container ----------
       containers:
         - name: api
-          image: jozu.ml/arnabchat2001/text-classifier/vllm-cpu:0.1.0
+          image: python:3.9-slim
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - |
+              echo "Installing dependencies..."
+              pip install --no-cache-dir fastapi uvicorn pydantic
+              echo "Starting application..."
+              cd /app
+              python3 app.py
           env:
             - name: MODEL_PATH
-              value: "/model/vllm-model"
+              value: "/model/fine-tuned"
           ports:
             - containerPort: 8000
           volumeMounts:
             - name: model-store
               mountPath: /model
+            - name: app-code
+              mountPath: /app
           readinessProbe:
             httpGet:
               path: /health
               port: 8000
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 6
-          resources:                            # increased for vLLM
-            requests: { cpu: 500m, memory: 2Gi }
-            limits:   { cpu: 2000m, memory: 4Gi }
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { cpu: 500m, memory: 512Mi }
+      
+      volumes:
+        - name: model-store
+          emptyDir: {}
+        - name: app-code
+          configMap:
+            name: app-code 

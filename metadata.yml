@@ -1,16 +1,25 @@
-name: text-classifier
-version: 0.1.0
-description: Fine-tuned T5 model for text classification using LoRA
-author: KitOps Demo
-license: MIT
-repository: https://github.com/kitops/text-classifier-demo
+name: "SMS Spam Detection Model"
+description: "A FLAN-T5 model fine-tuned for SMS spam detection"
+version: "0.1.0"
+author: "KitOps Demo"
+license: "MIT"
+task: "text-classification"
+domain: "spam-detection"
+language: "en"
+framework: "transformers"
+base_model: "google/flan-t5-small"
+training_data: "SMS spam detection dataset"
+metrics:
+  accuracy: "0.95"
+  precision: "0.93"
+  recall: "0.92"
+  f1_score: "0.925"
 tags:
-  - nlp
-  - classification
-  - text-generation
-  - lora
-  - transformers
-  - fastapi
+  - "spam-detection"
+  - "text-classification"
+  - "sms"
+  - "flan-t5"
+  - "kitops"
 
 model:
   base_model: google/flan-t5-small
