@@ -1,5 +1,7 @@
 # Text Classifier LLM Demo
 
+[![Packaged with KitOps](https://img.shields.io/badge/Packaged%20with-KitOps-FFAF52?labelColor=363636)](https://kitops.org)
+
 A complete end-to-end demo showcasing fine-tuning a T5 language model for text classification using LoRA (Low-Rank Adaptation) and deploying it as a FastAPI service with Kubernetes support.
 
 ## 🚀 Quick Start
